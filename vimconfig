@@ -1,0 +1,45 @@
+"-- don't let defaults do stuff--
+unlet! skip_defaults_vim
+source $VIMRUNTIME/defaults.vim
+
+"-- No vi --
+set nocompatible
+
+"-- Enable plugins
+filetype plugin on
+
+"-- Colour Scheme --
+:colorscheme habamax
+
+"-- Fuzzy finder
+set path+=**
+
+"-- Show available tab completes
+set wildmenu
+
+"-- tag jumping
+command! MakeTags !ctags -R . 
+
+"-- Indentation and Line -- 
+syntax on
+set number
+set relativenumber
+set tabstop=4
+set softtabstop=10
+set expandtab
+set autoindent
+set shiftwidth=4
+set textwidth=79
+
+"-- Colour column --
+set colorcolumn=80
+
+"-- Status bar --
+set laststatus=2
+
+"-- Encoding -- 
+set encoding=utf-8
+
+"-- Last line -- 
+set showmode
+set showcmd
