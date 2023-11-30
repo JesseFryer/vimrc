@@ -1,72 +1,101 @@
-"-- don't let defaults do stuff--
+"Don't let defaults do stuff
 unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
-"-- No vi --
+"No vi
 set nocompatible
 
-"-- Enable plugins
+"Enable plugins
 filetype plugin on
 
-"-- Fuzzy finder
+"Fuzzy finder
 set path+=**
 
-"-- Show available tab completes
+"Show available tab completes
 set wildmenu
 
-"-- auto complete
-set completeopt=menuone,longest
-set shortmess+=c
-
-"-- tag jumping
-command! MakeTags !ctags -R . 
-
-"-- Indentation and Line -- 
+"Indentation and Line
 syntax on
-set number
-set relativenumber
 set tabstop=4
 set softtabstop=4
+set shiftwidth=4
+set number
+set relativenumber
+set smartindent
 set expandtab
 set autoindent
-set shiftwidth=4
-set textwidth=79
 
-"-- Colour column --
+"Apprearance
 set colorcolumn=80
+set termguicolors
+set scrolloff=10
+set signcolumn=yes
 
-"-- Status bar --
-set laststatus=2
+"Behaviour
+set encoding=UTF-8
+set mouse=r
 
-"-- Encoding -- 
-set encoding=utf-8
-
-"-- Last line -- 
+"Last line
 set showmode
 set showcmd
 
-"-- Plugins
+
+"============================================================================="
+"//////////////////////////////// Plugins ////////////////////////////////////"
+"============================================================================="
 call plug#begin()
 
-" Nerd tree
+"Nerd tree
 Plug 'preservim/nerdtree'
-
-" Colour schemes
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+"Colour Schemes
 Plug 'junegunn/seoul256.vim'
 Plug 'dracula/vim'
 Plug 'morhetz/gruvbox'
-
-" Autocomplete
+"Autocomplete
 Plug 'vim-scripts/AutoComplPop'
+"Surrounding
+Plug 'tpope/vim-surround'
+"LSP
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 
 call plug#end()
 
-"-- Set colour scheme --
-:colorscheme gruvbox
+
+"============================================================================="
+"/////////////////////////////// Functions ///////////////////////////////////"
+"============================================================================="
+"LSP
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+endfunction
+
+augroup lsp_install
+    au!
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+"Set colour scheme
+let g:dracula_colorterm = 0
+:colorscheme dracula
 hi Normal guibg=NONE ctermbg=NONE
 
-" for surrounding
-vmap s S
 
-" Nerd Tree remaps
+"============================================================================="
+"///////////////////////////////// Remaps ////////////////////////////////////"
+"============================================================================="
+let mapleader = " "
+"Nerd Tree
 nnoremap <C-t> :NERDTreeToggle<CR>
+"Pane Navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+"Window Navigation
+nnoremap <leader>sv :vsplit<CR>
+nnoremap <leader>sh :split<CR>
+
+
